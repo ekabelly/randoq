@@ -6,11 +6,22 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    questions: null
+    i18n: null,
+    questions: null,
+    userLang: null
   },
   mutations: {
+    i18n(state, i18n) {
+      state.i18n = i18n;
+    },
     questions(state, questions) {
       state.questions = questions;
+    },
+    userLang(state, userLang) {
+      state.userLang = userLang;
+    },
+    appLang(state, locale) {
+      state.i18n.locale = locale;
     }
   },
   actions: {
@@ -24,7 +35,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    questions: state => state.questions
+    questions: state => state.questions,
+    userLang: state => state.userLang || "en",
+    i18n: state => state.i18n
   },
   modules: {}
 });

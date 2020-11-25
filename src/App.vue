@@ -1,24 +1,25 @@
 <template>
-  <div id="app" dir="rtl">
+  <div id="app" :class="{ rtl: appLang === 'he-il' }">
+    <lang-select></lang-select>
     <div class="questions" v-if="!end">
-      <div class="topic">topic: {{ selectedQ.topic }}</div>
+      <div class="topic">{{ $t("topic") }}: {{ selectedQ.topic }}</div>
       <div class="question">
-        {{ selectedQ.he }}
+        {{ selectedQ[appLang] }}
       </div>
       <div class="reroll-container">
         <button class="reroll" @click="assignRandomQ">
-          reroll
+          {{ $t("reroll") }}
         </button>
       </div>
     </div>
-    <div class="end" v-if="end">
-      נגמרו השאלות!
-    </div>
+    <div class="end" v-if="end">{{ $t("outOfQ") }}!</div>
   </div>
 </template>
 
 <script>
+import langSelect from "./components/lang-select.vue";
 export default {
+  components: { langSelect },
   name: "app",
   data() {
     return {
@@ -26,6 +27,11 @@ export default {
       selectedQ: {},
       questions: null
     };
+  },
+  computed: {
+    appLang() {
+      return this.$store.getters.i18n.locale;
+    }
   },
   async mounted() {
     this.questions = await this.$store.dispatch("questions");
@@ -45,6 +51,10 @@ export default {
 </script>
 
 <style lang="scss">
+.rtl {
+  direction: rtl;
+}
+
 body {
   margin: 0;
   padding: 0;
