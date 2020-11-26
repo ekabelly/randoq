@@ -1,0 +1,14 @@
+button {
+    border: 1px solid $main-color;
+    background-color: #fff;
+    color: $main-color;
+    outline: none;
+    transition: box-shadow .1s linear;
+    cursor: pointer;
+    
+    @media (min-width: 600px) {
+        &:hover {
+            box-shadow: 0 -2px 5px rgba(33,33,33,.4);
+        }
+    }
+}

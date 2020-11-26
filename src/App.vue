@@ -1,10 +1,14 @@
 <template>
-  <div id="app" :class="{ rtl: appLang === 'he-il' }">
+  <div id="app">
     <lang-select></lang-select>
-    <div class="questions" v-if="!end">
-      <div class="topic">{{ $t("topic") }}: {{ selectedQ.topic }}</div>
+    <div
+      class="questions"
+      v-if="!end && selectedQ"
+      :class="{ rtl: appLang === 'he-il' }"
+    >
+      <div class="topic">{{ $t("topic") }}: {{ selectedQ.topic[appLang] }}</div>
       <div class="question">
-        {{ selectedQ[appLang] }}
+        {{ selectedQ.text[appLang] }}
       </div>
       <div class="reroll-container">
         <button class="reroll" @click="assignRandomQ">
@@ -12,7 +16,9 @@
         </button>
       </div>
     </div>
-    <div class="end" v-if="end">{{ $t("outOfQ") }}!</div>
+    <div class="end" :class="{ rtl: appLang === 'he-il' }" v-if="end">
+      {{ $t("outOfQ") }}!
+    </div>
   </div>
 </template>
 
@@ -24,7 +30,7 @@ export default {
   data() {
     return {
       end: false,
-      selectedQ: {},
+      selectedQ: null,
       questions: null
     };
   },
@@ -51,13 +57,15 @@ export default {
 </script>
 
 <style lang="scss">
-.rtl {
-  direction: rtl;
-}
+@import "./assets/style/main.scss";
 
 body {
   margin: 0;
   padding: 0;
+}
+
+.rtl {
+  direction: rtl;
 }
 
 .questions,
@@ -69,6 +77,10 @@ body {
   height: 100vh;
 }
 
+.questions {
+  padding: 0 5px;
+}
+
 .topic,
 .question,
 .end {
@@ -77,6 +89,7 @@ body {
 
 .topic {
   font-size: 20px;
+  margin-bottom: 20px;
 }
 .question,
 .end {
@@ -91,6 +104,6 @@ body {
 
 .reroll {
   font-size: 30px;
-  width: 60vw;
+  padding: 5px 20px;
 }
 </style>

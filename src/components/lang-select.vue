@@ -24,4 +24,9 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.lang-select {
+  position: absolute;
+  margin: 10px;
+}
+</style>
